@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 
-    // Переход на новое активити
+    // Получение списка валют и передача инф-ии в InfoActivity
     private fun showInfo(date: String) {
         val service = ValuteService()
         val dispose = service.getData(date)
