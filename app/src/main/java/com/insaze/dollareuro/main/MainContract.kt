@@ -1,5 +1,6 @@
 package com.insaze.dollareuro.main
 
+import com.insaze.dollareuro.adapter.DateAdapter
 import com.insaze.dollareuro.model.Valute
 
 interface MainContract {
@@ -10,7 +11,7 @@ interface MainContract {
 
     interface Presenter {
         fun onItemWasClicked(date: String)
-        fun onScrolledToBottom()
+        fun onScrolledToBottom(adapter: DateAdapter)
         fun onDestroy()
     }
 

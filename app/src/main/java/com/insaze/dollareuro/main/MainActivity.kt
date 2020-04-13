@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (layoutManager.findLastCompletelyVisibleItemPosition() == presenter.list.size - 1)
-                    presenter.onScrolledToBottom()
+                    presenter.onScrolledToBottom(adapter)
             }
         })
     }

@@ -1,6 +1,7 @@
 package com.insaze.dollareuro.main
 
 import android.util.Log
+import com.insaze.dollareuro.adapter.DateAdapter
 import com.insaze.dollareuro.network.ValuteService
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
@@ -25,8 +26,9 @@ class MainPresenter(val view: MainContract.View): MainContract.Presenter {
             })
     }
 
-    override fun onScrolledToBottom() {
+    override fun onScrolledToBottom(adapter: DateAdapter) {
         repository.loadDates(list)
+        adapter.notifyDataSetChanged()
     }
 
     override fun onDestroy() {
