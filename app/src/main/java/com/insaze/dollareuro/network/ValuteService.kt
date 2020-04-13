@@ -10,11 +10,9 @@ import java.nio.charset.Charset
 
 class ValuteService {
 
-    // ID нужных валют
     private val DOLLAR_ID = "R01235"
     private val EURO_ID = "R01239"
 
-    // Получение списка валют
     fun getData(date: String): Single<ArrayList<Valute>> {
         return Single.create { subscriber ->
             val xml = URL("https://www.cbr.ru/scripts/XML_daily.asp?date_req=$date").readText(
@@ -25,7 +23,6 @@ class ValuteService {
         }
     }
 
-    // Парсинг XML
     fun valuteList(xml: String): ArrayList<Valute> {
         val factory = XmlPullParserFactory.newInstance()
         factory.isNamespaceAware = true
