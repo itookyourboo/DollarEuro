@@ -1,12 +1,14 @@
 package com.insaze.dollareuro.main
 
+import android.util.Log
 import com.insaze.dollareuro.utils.DateUtils
 
 class MainRepository: MainContract.Repository {
 
     override fun populateDates(): ArrayList<Long> {
         val list = ArrayList<Long>()
-        val today = System.currentTimeMillis()
+        val today = (System.currentTimeMillis() / (DateUtils.DAY)) * DateUtils.DAY
+        Log.e("TODAY", today.toString())
         for (offset in 0 until 15)
             list.add(today - offset * DateUtils.DAY)
 

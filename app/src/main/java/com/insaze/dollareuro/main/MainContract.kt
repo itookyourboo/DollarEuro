@@ -11,7 +11,7 @@ interface MainContract {
 
     interface Presenter {
         fun onItemWasClicked(date: String)
-        fun onScrolledToBottom(adapter: DateAdapter)
+        fun onScrolledToBottom()
         fun onDestroy()
     }
 

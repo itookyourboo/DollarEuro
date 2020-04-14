@@ -30,7 +30,7 @@ class ValuteService {
         xpp.setInput(StringReader(xml))
 
         val valuteList: ArrayList<Valute> = ArrayList()
-        var currentValute: Valute? = null
+        lateinit var currentValute: Valute
 
         while (xpp.eventType != XmlPullParser.END_DOCUMENT) {
             if (xpp.eventType == XmlPullParser.START_TAG) {
@@ -39,9 +39,9 @@ class ValuteService {
                         currentValute = Valute()
                         currentValute.id = xpp.getAttributeValue(0)
                     }
-                    "Name" -> currentValute!!.name = xpp.nextText()
+                    "Name" -> currentValute.name = xpp.nextText()
                     "Value" -> {
-                        currentValute!!.value = xpp.nextText()
+                        currentValute.value = xpp.nextText()
                         valuteList.add(currentValute)
                     }
                 }

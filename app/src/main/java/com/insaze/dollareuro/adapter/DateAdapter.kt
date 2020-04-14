@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.insaze.dollareuro.R
 import com.insaze.dollareuro.utils.DateUtils
 
-class DateAdapter(val items: ArrayList<Long>, var onItemClickListener: OnItemClickListener? = null):
+class DateAdapter(var items: ArrayList<Long>, var onItemWasClicked: (date: String) -> Unit):
     RecyclerView.Adapter<DateAdapter.DateHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
@@ -25,15 +25,7 @@ class DateAdapter(val items: ArrayList<Long>, var onItemClickListener: OnItemCli
 
         fun bind(item: Long) {
             dateText.text = DateUtils.longToDate(item)
-
-            itemView.setOnClickListener {
-                if (adapterPosition != RecyclerView.NO_POSITION)
-                    onItemClickListener!!.onItemClicked(dateText.text as String)
-            }
+            itemView.setOnClickListener { onItemWasClicked(dateText.text.toString()) }
         }
-    }
-
-    interface OnItemClickListener {
-        fun onItemClicked(date: String)
     }
 }

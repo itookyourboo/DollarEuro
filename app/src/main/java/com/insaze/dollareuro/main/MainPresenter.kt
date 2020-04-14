@@ -26,9 +26,8 @@ class MainPresenter(val view: MainContract.View): MainContract.Presenter {
             })
     }
 
-    override fun onScrolledToBottom(adapter: DateAdapter) {
+    override fun onScrolledToBottom() {
         repository.loadDates(list)
-        adapter.notifyDataSetChanged()
     }
 
     override fun onDestroy() {
