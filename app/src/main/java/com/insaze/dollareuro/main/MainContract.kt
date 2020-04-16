@@ -12,7 +12,6 @@ interface MainContract {
     interface Presenter {
         fun onItemWasClicked(date: String)
         fun onScrolledToBottom()
-        fun onDestroy()
     }
 
     interface Repository {

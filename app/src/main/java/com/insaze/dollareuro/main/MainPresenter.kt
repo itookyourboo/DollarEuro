@@ -1,36 +1,25 @@
 package com.insaze.dollareuro.main
 
-import android.util.Log
-import com.insaze.dollareuro.adapter.DateAdapter
 import com.insaze.dollareuro.network.ValuteService
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.*
 
-class MainPresenter(val view: MainContract.View): MainContract.Presenter {
+class MainPresenter(val view: MainContract.View) : MainContract.Presenter {
     private val repository = MainRepository()
     val list = repository.populateDates()
-    var dispose: Disposable? = null
 
     override fun onItemWasClicked(date: String) {
         val service = ValuteService()
-        dispose = service.getData(date)
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ valutes ->
-                view.showInfo(date, service.getDollar(valutes), service.getEuro(valutes))
-                Log.e("TAG", "SUCCESS")
-            }, {
-                view.showError()
-                Log.e("Tag", it.toString())
-            })
+        GlobalScope.launch {
+            val data = service.getData(date)
+            withContext(Dispatchers.Main) {
+                data?.let {
+                    view.showInfo(date, service.getDollar(data), service.getEuro(data))
+                } ?: view.showError()
+            }
+        }
     }
 
     override fun onScrolledToBottom() {
         repository.loadDates(list)
-    }
-
-    override fun onDestroy() {
-        dispose!!.dispose()
     }
 }

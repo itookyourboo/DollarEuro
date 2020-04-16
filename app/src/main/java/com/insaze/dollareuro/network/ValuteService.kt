@@ -1,7 +1,6 @@
 package com.insaze.dollareuro.network
 
 import com.insaze.dollareuro.model.Valute
-import io.reactivex.rxjava3.core.Single
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.StringReader
@@ -13,14 +12,13 @@ class ValuteService {
     private val DOLLAR_ID = "R01235"
     private val EURO_ID = "R01239"
 
-    fun getData(date: String): Single<ArrayList<Valute>> {
-        return Single.create { subscriber ->
-            val xml = URL("https://www.cbr.ru/scripts/XML_daily.asp?date_req=$date").readText(
-                Charset.forName("windows-1251"))
-            val data = valuteList(xml)
-
-            subscriber.onSuccess(data)
-        }
+    fun getData(date: String): ArrayList<Valute>? = try {
+        val xml = URL("https://www.cbr.ru/scripts/XML_daily.asp?date_req=$date").readText(
+            Charset.forName("windows-1251")
+        )
+        valuteList(xml)
+    } catch (t: Throwable) {
+        null
     }
 
     fun valuteList(xml: String): ArrayList<Valute> {
